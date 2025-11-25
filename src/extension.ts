@@ -46,11 +46,17 @@ export function activate(context: vscode.ExtensionContext) {
                 return;
             }
 
-            // Auto-Save
+            // Auto save and keep current tab open
+            // We want the diff to open up in a new tab but don't want to lose our values file
             const editor = vscode.window.activeTextEditor;
-            if (editor && editor.document.uri.fsPath === targetFilePath && editor.document.isDirty) {
-                await editor.document.save();
+            if (editor && editor.document.uri.fsPath === targetFilePath) {
+                await vscode.commands.executeCommand('workbench.action.keepEditor');
+                if (editor.document.isDirty) {
+                    await editor.document.save();
+                }
             }
+
+
 
             const targetDir = path.dirname(targetFilePath);
             const gitRoot = findGitRoot(targetDir);
@@ -72,7 +78,7 @@ export function activate(context: vscode.ExtensionContext) {
 
             vscode.window.withProgress({
                 location: vscode.ProgressLocation.Notification,
-                title: `rdv: rendering ${fileName}...`,
+                title: `rdv: rendering ${relativePath} with ${fileName}...`,
                 cancellable: false
             }, async () => {
                 return new Promise<void>((resolve) => {
@@ -96,8 +102,8 @@ export function activate(context: vscode.ExtensionContext) {
                             return;
                         }
 
-                        const title = `RDV: ${fileName}`;
-                        await vscode.commands.executeCommand('vscode.diff', leftUri, rightUri, title);
+                        const title = `Rendered Diff: ${fileName}`;
+                        await vscode.commands.executeCommand('vscode.diff', leftUri, rightUri, title, { viewColumn: vscode.ViewColumn.Active, preview: true } );
                         resolve();
                     });
                 });
