@@ -1,7 +1,7 @@
 {
   "name": "vscode-rdv",
   "displayName": "RDV",
-  "description": "Render and Diff for Kubernetes manifests",
+  "description": "Render and Diff for Helm charts",
   "version": "0.1.0",
   "publisher": "dlactin",
   "repository": "github.com/dlactin/vscode-rdv",
@@ -29,7 +29,7 @@
     "commands": [
       {
         "command": "rdv.diff",
-        "title": "RDV: Render and Diff"
+        "title": "Render and Diff"
       }
     ],
     "menus": {
