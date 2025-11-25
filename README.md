@@ -2,7 +2,7 @@
 
 `vscode-rdv` provides a fast and local preview of your rendered Kubernetes manifest changes directly within Visual Studio Code.
 
-It integrates the `rdv` CLI to render your local Helm chart or Kustomize overlay, validates rendered manifests via `kubeconform`, and compares the resulting manifests against the version in a target Git ref (such as `main`).
+It integrates the `rdv` CLI to render your local Helm chart and compares the resulting manifests against the `main` Git ref.
 
 The extension opens a native side-by-side diff of the final rendered YAML.
 
